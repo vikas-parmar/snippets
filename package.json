@@ -1,27 +1,37 @@
 {
-  "name": "snippet",
+  "name": "snippets",
   "version": "0.1.0",
   "private": true,
+  "author": "Vikas Parmar",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "format": "prettier --write .",
+    "format:file": "prettier --write",
+    "lint": "next lint",
+    "lint:quiet": "next lint --quiet",
+    "lint:fix": "next lint --fix",
+    "cleanse": "rm -rf package-lock.json && rm -rf node_modules && npm install"
   },
   "dependencies": {
+    "next": "15.1.7",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.1.7"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3.3.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "eslint": "^9",
+    "eslint": "^9.21.0",
     "eslint-config-next": "15.1.7",
-    "@eslint/eslintrc": "^3"
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "postcss": "^8",
+    "prettier": "^3.5.2",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
   }
 }
