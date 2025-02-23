@@ -14,7 +14,7 @@ const eslintConfig = [
     'next/core-web-vitals',
     'next/typescript',
     'prettier', // Add Prettier support
-    // 'plugin:@tanstack/query/recommended', // TanStk Query plugin if you're using it
+    'plugin:@tanstack/query/recommended', // TanStk Query plugin if you're using it
     'next' // Ensure next eslint config is included last
   ),
   {
