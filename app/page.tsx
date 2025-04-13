@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useClerk, useUser } from '@clerk/nextjs';
+import { SignOutButton, useClerk, useUser } from '@clerk/nextjs';
 import {
   MessageCircle,
   Heart,
@@ -20,6 +20,7 @@ import Loader from '@/app/loader';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function Home() {
@@ -28,7 +29,7 @@ export default function Home() {
 
   if (!user && !isLoaded) return <Loader />;
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50">
       {/* Left Sidebar */}
       <div className="flex w-64 flex-col gap-4 border-r bg-white p-4">
         <Button
@@ -77,6 +78,10 @@ export default function Home() {
           <Settings size={18} /> Settings
         </Button>
 
+        <SignOutButton>
+          <Button variant="destructive">Log Out</Button>
+        </SignOutButton>
+
         <div className="mt-auto rounded-xl bg-gray-50 p-4">
           <div className="text-center">
             <h3 className="mb-2 font-medium">Download the App</h3>
@@ -93,7 +98,7 @@ export default function Home() {
 
       {/* Main Content */}
       <div className="flex-1 p-6">
-        <div className="mx-auto max-w-2xl">
+        <div className="relative mx-auto max-w-2xl">
           <Tabs defaultValue="recents" className="mb-6">
             <TabsList className="h-auto w-full justify-start gap-2 bg-transparent p-0">
               <TabsTrigger
@@ -117,9 +122,9 @@ export default function Home() {
             </TabsList>
           </Tabs>
 
-          <div className="space-y-6">
+          <ScrollArea className="h-[calc(90vh-200px)] w-full rounded-xl">
             {/* Post */}
-            <Card className="shadow-sm">
+            <Card className="mb-5 shadow-sm">
               <CardHeader className="flex flex-row items-center p-4">
                 <Avatar className="h-10 w-10">
                   <AvatarImage src="/placeholder.svg" />
@@ -200,50 +205,210 @@ export default function Home() {
               </CardFooter>
             </Card>
 
-            {/* Share Something Card */}
-            <Card className="shadow-sm">
-              <CardContent className="p-4">
-                <div className="flex gap-3">
-                  <Avatar>
-                    <AvatarImage src={user?.imageUrl} />
-                    <AvatarFallback>
-                      {user?.fullName
-                        ?.split(' ')
-                        .map((i) => i.charAt(0))
-                        .join('')}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1">
-                    <input
-                      type="text"
-                      placeholder="Share something..."
-                      className="w-full rounded-lg bg-gray-100 p-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    />
-                    <div className="mt-3 flex gap-2">
-                      <Button variant="outline" size="sm" className="gap-2">
-                        <ImageIcon size={16} /> File
-                      </Button>
-                      <Button variant="outline" size="sm" className="gap-2">
-                        <ImageIcon size={16} /> Image
-                      </Button>
-                      <Button variant="outline" size="sm" className="gap-2">
-                        <MapPin size={16} /> Location
-                      </Button>
-                      <Button variant="outline" size="sm" className="ml-auto gap-2">
-                        Public
-                      </Button>
-                      <Button className="bg-black text-white hover:bg-gray-800">Send</Button>
-                    </div>
-                  </div>
+            <Card className="mb-5 shadow-sm">
+              <CardHeader className="flex flex-row items-center p-4">
+                <Avatar className="h-10 w-10">
+                  <AvatarImage src="/placeholder.svg" />
+                  <AvatarFallback>GL</AvatarFallback>
+                </Avatar>
+                <div className="ml-3">
+                  <p className="font-semibold">George Lobko</p>
+                  <p className="text-sm text-gray-500">2 hours ago</p>
+                </div>
+                <Button variant="ghost" size="icon" className="ml-auto">
+                  <MoreHorizontal className="h-5 w-5" />
+                </Button>
+              </CardHeader>
+              <CardContent className="p-4 pt-0">
+                <p className="mb-4">
+                  Hi everyone, today I was on the most beautiful mountain in the world 😍, I also
+                  want to say hi to
+                  <Link href="#" className="mx-1 text-purple-600">
+                    @Silena
+                  </Link>
+                  <Link href="#" className="mx-1 text-purple-600">
+                    @Olya
+                  </Link>
+                  and
+                  <Link href="#" className="mx-1 text-purple-600">
+                    @Davis
+                  </Link>
+                  !
+                </p>
+                <div className="grid grid-cols-3 gap-2 overflow-hidden rounded-xl">
+                  <Image
+                    src="/placeholder.svg"
+                    alt="Mountain view"
+                    width={300}
+                    height={300}
+                    className="h-48 w-full object-cover"
+                  />
+                  <Image
+                    src="/placeholder.svg"
+                    alt="Mountain view"
+                    width={300}
+                    height={300}
+                    className="h-48 w-full object-cover"
+                  />
+                  <Image
+                    src="/placeholder.svg"
+                    alt="Mountain view"
+                    width={300}
+                    height={300}
+                    className="h-48 w-full object-cover"
+                  />
                 </div>
               </CardContent>
+              <CardFooter className="flex items-center gap-4 p-4">
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <ImageIcon className="h-4 w-4" />
+                  6355
+                </div>
+                <Button variant="ghost" size="sm" className="gap-2">
+                  <Heart className="h-4 w-4" />
+                  Like
+                </Button>
+                <Button variant="ghost" size="sm" className="gap-2">
+                  <MessageCircle className="h-4 w-4" />
+                  Comment
+                </Button>
+                <div className="ml-auto flex gap-1">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-red-100 text-xs">
+                    ❤️
+                  </span>
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-yellow-100 text-xs">
+                    🔥
+                  </span>
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-purple-100 text-xs">
+                    🚀
+                  </span>
+                </div>
+              </CardFooter>
             </Card>
-          </div>
+            <Card className="shadow-sm">
+              <CardHeader className="flex flex-row items-center p-4">
+                <Avatar className="h-10 w-10">
+                  <AvatarImage src="/placeholder.svg" />
+                  <AvatarFallback>GL</AvatarFallback>
+                </Avatar>
+                <div className="ml-3">
+                  <p className="font-semibold">George Lobko</p>
+                  <p className="text-sm text-gray-500">2 hours ago</p>
+                </div>
+                <Button variant="ghost" size="icon" className="ml-auto">
+                  <MoreHorizontal className="h-5 w-5" />
+                </Button>
+              </CardHeader>
+              <CardContent className="p-4 pt-0">
+                <p className="mb-4">
+                  Hi everyone, today I was on the most beautiful mountain in the world 😍, I also
+                  want to say hi to
+                  <Link href="#" className="mx-1 text-purple-600">
+                    @Silena
+                  </Link>
+                  <Link href="#" className="mx-1 text-purple-600">
+                    @Olya
+                  </Link>
+                  and
+                  <Link href="#" className="mx-1 text-purple-600">
+                    @Davis
+                  </Link>
+                  !
+                </p>
+                <div className="grid grid-cols-3 gap-2 overflow-hidden rounded-xl">
+                  <Image
+                    src="/placeholder.svg"
+                    alt="Mountain view"
+                    width={300}
+                    height={300}
+                    className="h-48 w-full object-cover"
+                  />
+                  <Image
+                    src="/placeholder.svg"
+                    alt="Mountain view"
+                    width={300}
+                    height={300}
+                    className="h-48 w-full object-cover"
+                  />
+                  <Image
+                    src="/placeholder.svg"
+                    alt="Mountain view"
+                    width={300}
+                    height={300}
+                    className="h-48 w-full object-cover"
+                  />
+                </div>
+              </CardContent>
+              <CardFooter className="flex items-center gap-4 p-4">
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <ImageIcon className="h-4 w-4" />
+                  6355
+                </div>
+                <Button variant="ghost" size="sm" className="gap-2">
+                  <Heart className="h-4 w-4" />
+                  Like
+                </Button>
+                <Button variant="ghost" size="sm" className="gap-2">
+                  <MessageCircle className="h-4 w-4" />
+                  Comment
+                </Button>
+                <div className="ml-auto flex gap-1">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-red-100 text-xs">
+                    ❤️
+                  </span>
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-yellow-100 text-xs">
+                    🔥
+                  </span>
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-purple-100 text-xs">
+                    🚀
+                  </span>
+                </div>
+              </CardFooter>
+            </Card>
+          </ScrollArea>
+          {/* Share Something Card */}
+          <Card className="absoute bottom-6 m-6 shadow-sm">
+            <CardContent className="p-4">
+              <div className="flex gap-3">
+                <Avatar>
+                  <AvatarImage src={user?.imageUrl} />
+                  <AvatarFallback>
+                    {user?.fullName
+                      ?.split(' ')
+                      .map((i) => i.charAt(0))
+                      .join('')}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex-1">
+                  <input
+                    type="text"
+                    placeholder="Share something..."
+                    className="w-full rounded-lg bg-gray-100 p-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                  <div className="mt-3 flex gap-2">
+                    <Button variant="outline" size="sm" className="gap-2">
+                      <ImageIcon size={16} /> File
+                    </Button>
+                    <Button variant="outline" size="sm" className="gap-2">
+                      <ImageIcon size={16} /> Image
+                    </Button>
+                    <Button variant="outline" size="sm" className="gap-2">
+                      <MapPin size={16} /> Location
+                    </Button>
+                    <Button variant="outline" size="sm" className="ml-auto gap-2">
+                      Public
+                    </Button>
+                    <Button className="bg-black text-white hover:bg-gray-800">Send</Button>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
 
       {/* Right Sidebar */}
-      <div className="flex w-80 flex-col justify-evenly border-l bg-white p-4">
+      <div className="flex w-80 flex-col justify-between border-l bg-white p-4">
         <div className="mb-8">
           <h3 className="mb-4 text-xl font-semibold">Suggestions</h3>
           <div className="space-y-3">

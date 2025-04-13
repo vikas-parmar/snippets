@@ -1,8 +1,9 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { ClerkProvider } from '@clerk/nextjs';
+import { ClerkProvider, SignedIn, SignedOut } from '@clerk/nextjs';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import SignInPage from './(auth)/sign-in/[[...sign-in]]/page';
 
 // Create a query client
 const queryClient = new QueryClient({
@@ -22,7 +23,12 @@ interface ProvidersProps {
 export function Providers({ children }: ProvidersProps) {
   return (
     <ClerkProvider>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <SignedIn>
+        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      </SignedIn>
+      <SignedOut>
+        <SignInPage />
+      </SignedOut>
     </ClerkProvider>
   );
 }
