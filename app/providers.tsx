@@ -3,6 +3,7 @@
 import { ReactNode } from 'react';
 import { ClerkProvider, SignedIn, SignedOut } from '@clerk/nextjs';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from 'sonner';
 import SignInPage from './(auth)/sign-in/[[...sign-in]]/page';
 
 // Create a query client
@@ -29,6 +30,7 @@ export function Providers({ children }: ProvidersProps) {
       <SignedOut>
         <SignInPage />
       </SignedOut>
+      <Toaster />
     </ClerkProvider>
   );
 }

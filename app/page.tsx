@@ -1,22 +1,20 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { SignOutButton, useClerk, useUser } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 import {
   MessageCircle,
   Heart,
   MoreHorizontal,
   ImageIcon,
   MapPin,
-  Settings,
-  FileText,
-  User2Icon,
   Music4,
   CookingPot,
   TentTree,
   Component,
 } from 'lucide-react';
 import Loader from '@/app/loader';
+import Sidebar from '@/components/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
@@ -25,76 +23,11 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function Home() {
   const { user, isLoaded } = useUser();
-  const { openUserProfile } = useClerk();
 
   if (!user && !isLoaded) return <Loader />;
   return (
     <div className="flex h-screen bg-gray-50">
-      {/* Left Sidebar */}
-      <div className="flex w-64 flex-col gap-4 border-r bg-white p-4">
-        <Button
-          variant="ghost"
-          onClick={() => openUserProfile()}
-          className="mb-4 flex h-fit items-center gap-3"
-        >
-          <div className="relative">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-purple-400 via-pink-300 to-blue-400">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={user?.imageUrl}
-                alt="Logo"
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-            </div>
-          </div>
-          <div>
-            <h2 className="font-semibold">{user?.fullName}</h2>
-            <p className="text-sm text-gray-500">@{user?.username}</p>
-          </div>
-        </Button>
-
-        <Button
-          variant="default"
-          className="w-full justify-start gap-2 bg-black text-white hover:bg-gray-800"
-        >
-          <FileText size={18} /> News Feed
-        </Button>
-        <Button variant="ghost" className="w-full justify-start gap-2">
-          <MessageCircle size={18} /> Messages
-          <span className="ml-auto rounded-full bg-black px-2 py-0.5 text-xs text-white">4</span>
-        </Button>
-        <Button variant="ghost" className="w-full justify-start gap-2">
-          <User2Icon size={18} /> Friends
-          <span className="ml-auto rounded-full bg-purple-500 px-2 py-0.5 text-xs text-white">
-            3
-          </span>
-        </Button>
-        <Button variant="ghost" className="w-full justify-start gap-2">
-          <ImageIcon size={18} /> Media
-        </Button>
-        <Button variant="ghost" className="w-full justify-start gap-2">
-          <Settings size={18} /> Settings
-        </Button>
-
-        <SignOutButton>
-          <Button variant="destructive">Log Out</Button>
-        </SignOutButton>
-
-        <div className="mt-auto rounded-xl bg-gray-50 p-4">
-          <div className="text-center">
-            <h3 className="mb-2 font-medium">Download the App</h3>
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-u3LZ1iAc2Eio5aUb0z12IKCA22XYnE.png"
-              alt="App QR Code"
-              width={120}
-              height={120}
-              className="mx-auto mb-2"
-            />
-          </div>
-        </div>
-      </div>
+      <Sidebar />
 
       {/* Main Content */}
       <div className="flex-1 p-6">
