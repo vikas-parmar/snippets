@@ -2,15 +2,31 @@
 
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { SignOutButton, useClerk, useUser } from '@clerk/nextjs';
-import { MessageCircle, ImageIcon, Settings, FileText, User2Icon } from 'lucide-react';
+import { SignOutButton, useUser } from '@clerk/nextjs';
+import {
+  MessageCircle,
+  ImageIcon,
+  Settings,
+  FileText,
+  User2Icon,
+  LogOutIcon,
+  PackagePlus,
+  UserRoundPen,
+} from 'lucide-react';
 import Loader from '@/app/loader';
 import { Button } from '@/components/ui/button';
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarTrigger,
+} from '@/components/ui/menubar';
 import { cn } from '@/lib/utils';
 
-const Sidebar = () => {
+const SidebarLeft = () => {
   const { user, isLoaded } = useUser();
-  const { openUserProfile } = useClerk();
   const router = useRouter();
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
@@ -29,16 +45,12 @@ const Sidebar = () => {
   if (!user && !isLoaded) return <Loader />;
 
   return (
-    <div className="hidden w-64 flex-col gap-4 border-r bg-white p-4 md:flex">
-      <Button
-        variant="ghost"
-        onClick={() => openUserProfile()}
-        className="mb-4 flex h-fit items-center gap-3"
-      >
-        <div className="relative">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-purple-400 via-pink-300 to-blue-400">
+    <div className="fixed left-0 top-0 hidden h-full w-64 flex-col gap-4 border-r bg-white p-4 md:flex">
+      <Menubar className="h-fit border-none p-0 shadow-none">
+        <MenubarMenu>
+          <MenubarTrigger className="flex w-full cursor-pointer items-center justify-center gap-2 p-2">
             {user?.imageUrl && (
-              <img
+              <Image
                 src={user.imageUrl || '/placeholder.svg'}
                 alt="Profile"
                 width={40}
@@ -46,13 +58,36 @@ const Sidebar = () => {
                 className="rounded-full"
               />
             )}
-          </div>
-        </div>
-        <div>
-          <h2 className="font-semibold">{user?.fullName}</h2>
-          <p className="text-sm text-gray-500">@{user?.username}</p>
-        </div>
-      </Button>
+            <div>
+              <h2 className="font-semibold">{user?.fullName}</h2>
+              <p className="text-sm text-gray-500">@{user?.username}</p>
+            </div>
+          </MenubarTrigger>
+          <MenubarContent>
+            <MenubarItem>
+              <div className="flex cursor-pointer items-center justify-center gap-2">
+                <UserRoundPen size={14} />
+                Manage Account
+              </div>
+            </MenubarItem>
+            <MenubarItem>
+              <div className="flex cursor-pointer items-center justify-center gap-2">
+                <PackagePlus size={14} />
+                New Post
+              </div>
+            </MenubarItem>
+            <MenubarSeparator />
+            <MenubarItem className="text-red-500 hover:text-red-600">
+              <SignOutButton>
+                <div className="flex cursor-pointer items-center justify-center gap-2">
+                  <LogOutIcon size={14} />
+                  Sign Out
+                </div>
+              </SignOutButton>
+            </MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
+      </Menubar>
 
       <div className="space-y-1">
         {navList.map((item) => (
@@ -70,12 +105,6 @@ const Sidebar = () => {
         ))}
       </div>
 
-      <SignOutButton>
-        <Button variant="destructive" className="mt-2 w-full">
-          Log Out
-        </Button>
-      </SignOutButton>
-
       <div className="mt-auto rounded-xl bg-gray-50 p-4">
         <div className="text-center">
           <h3 className="mb-2 font-medium">Download the App</h3>
@@ -92,4 +121,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default SidebarLeft;
