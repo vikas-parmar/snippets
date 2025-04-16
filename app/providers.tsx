@@ -3,6 +3,7 @@
 import { ReactNode } from 'react';
 import { ClerkProvider, SignedIn, SignedOut } from '@clerk/nextjs';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Analytics } from '@vercel/analytics/react';
 import { Toaster } from 'sonner';
 import HeaderTabs from '@/components/header-tabs';
 import SidebarLeft from '@/components/sidebar-left';
@@ -43,6 +44,7 @@ export function Providers({ children }: ProvidersProps) {
         <SignInPage />
       </SignedOut>
       <Toaster />
+      <Analytics />
     </ClerkProvider>
   );
 }
